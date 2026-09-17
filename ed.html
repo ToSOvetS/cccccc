@@ -68,14 +68,10 @@
         </div>
 
         <div class="slider-wrapper" role="region" aria-label="Слайдер сертификатов">
-            <!-- Контейнер слайдов -->
             <div class="slider-container">
                 <div class="slider-track" id="slider-track">
-                    <!-- Слайды генерируются через JS -->
                 </div>
             </div>
-
-            <!-- Кнопки навигации -->
             <button class="slider-btn slider-btn--prev" id="slider-prev" aria-label="Предыдущий слайд">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M15 18l-6-6 6-6"/>
@@ -86,11 +82,7 @@
                     <path d="M9 18l6-6-6-6"/>
                 </svg>
             </button>
-
-            <!-- Индикаторы -->
             <div class="slider-dots" id="slider-dots" role="tablist"></div>
-
-            <!-- Счётчик -->
             <div class="slider-counter" id="slider-counter"></div>
         </div>
     </div>
@@ -121,8 +113,8 @@
             </form>
             <div class="contact__alt">
               <p>Или напишите напрямую:</p>
-              <a href="mailto:info@example.com" class="contact-link">info@example.com</a>
-              <a href="tel:+79000000000" class="contact-link">+7 (900) 000-00-00</a>
+              <a href="mailto:arina.tsakoeva@yandex.ru" class="contact-link">arina.tsakoeva@yandex.ru</a>
+              <a href="tel:+79957932101" class="contact-link">+7 (995) 793-21-01</a>
             </div>
           </div>
         </div>
@@ -141,11 +133,9 @@
     (function() {
         'use strict';
 
-        // ---------- ДАННЫЕ СЕРТИФИКАТОВ ----------
-        // Добавьте свои сертификаты сюда!
         const certificates = [
             {
-                src: 'images/magispsy.jpg',          // Путь к изображению
+                src: 'images/magispsy.jpg',   
                 caption: 'Магистр психологии',
                 sub: 'Московский институт психоанализа, 2022 - 2025'
             },
@@ -160,7 +150,7 @@
                 sub: 'Школа практического психоанализа, 2025'
             },
             {
-                src: 'images/V Гарольдовские чтения.jpg',          // Путь к изображению
+                src: 'images/V Гарольдовские чтения.jpg', 
                 caption: 'V Гарольдовские чтения',
                 sub: 'ЕАРПП, 2025'
             },
@@ -175,7 +165,7 @@
                 sub: 'Newpsy, 2026'
             },
             {
-                src: 'images/Крайние формы психопатологии.jpg',          // Путь к изображению
+                src: 'images/Крайние формы психопатологии.jpg', 
                 caption: 'Крайние формы психопатологии: травматические причины психических расстройств',
                 sub: 'IAPP, 2025'
             },
@@ -190,7 +180,7 @@
                 sub: 'Московский институт психоанализа, 2025'
             },
             {
-                src: 'images/Сексуальность.jpg',          // Путь к изображению
+                src: 'images/Сексуальность.jpg', 
                 caption: 'Сексуальность. Добро или зло?',
                 sub: 'Московский институт психоанализа, 2025'
             },
@@ -209,10 +199,7 @@
                 caption: 'Техника психоаналитической терапии: интервенции, сеттинг и аналитическая установка» Салмана Ахтара',
                 sub: 'IAAP, 2026'
             }
-            // Добавьте сколько нужно
         ];
-
-        // ---------- СОСТОЯНИЕ СЛАЙДЕРА ----------
         let currentIndex = 0;
         const totalSlides = certificates.length;
 
@@ -221,8 +208,6 @@
         const counter = document.getElementById('slider-counter');
         const prevBtn = document.getElementById('slider-prev');
         const nextBtn = document.getElementById('slider-next');
-
-        // ---------- ФУНКЦИЯ ОТРИСОВКИ СЛАЙДОВ ----------
         function renderSlides() {
             if (!track) return;
 
@@ -250,13 +235,9 @@
 
                 track.appendChild(slide);
             });
-
-            // Перерисовываем индикаторы и счётчик
             renderDots();
             updateCounter();
         }
-
-        // ---------- ИНДИКАТОРЫ ----------
         function renderDots() {
             if (!dotsContainer) return;
 
@@ -280,8 +261,6 @@
                 dotsContainer.appendChild(dot);
             }
         }
-
-        // ---------- ОБНОВЛЕНИЕ ИНДИКАТОРОВ ----------
         function updateDots() {
             if (!dotsContainer) return;
 
@@ -291,27 +270,19 @@
                 dot.setAttribute('aria-selected', i === currentIndex ? 'true' : 'false');
             });
         }
-
-        // ---------- ОБНОВЛЕНИЕ СЧЁТЧИКА ----------
         function updateCounter() {
             if (counter) {
                 counter.textContent = `${currentIndex + 1} / ${totalSlides}`;
             }
         }
-
-        // ---------- ПЕРЕХОД К СЛАЙДУ ----------
         function goToSlide(index) {
             if (index < 0) index = totalSlides - 1;
             if (index >= totalSlides) index = 0;
 
             currentIndex = index;
-
-            // Сдвиг трека
             if (track) {
                 track.style.transform = `translateX(-${currentIndex * 100}%)`;
             }
-
-            // Обновляем активные слайды
             const slides = track.querySelectorAll('.slide');
             slides.forEach((slide, i) => {
                 slide.classList.toggle('active', i === currentIndex);
@@ -322,7 +293,6 @@
             updateCounter();
         }
 
-        // ---------- ОБРАБОТЧИКИ КНОПОК ----------
         prevBtn?.addEventListener('click', () => {
             goToSlide(currentIndex - 1);
         });
@@ -330,8 +300,6 @@
         nextBtn?.addEventListener('click', () => {
             goToSlide(currentIndex + 1);
         });
-
-        // ---------- КЛАВИАТУРА ----------
         document.addEventListener('keydown', (e) => {
             const isSliderFocused = document.querySelector('.slider-wrapper')?.contains(document.activeElement);
 
@@ -346,7 +314,6 @@
             }
         });
 
-        // ---------- ТАЧ-СВАЙП ----------
         let touchStartX = 0;
         let touchEndX = 0;
         let isSwiping = false;
@@ -382,36 +349,25 @@
             touchEndX = 0;
         }, { passive: true });
 
-        // ---------- ПОДДЕРЖКА АДАПТИВА: пересчёт при изменении размера ----------
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
-                // Просто обновляем позицию слайда
                 if (track) {
                     track.style.transform = `translateX(-${currentIndex * 100}%)`;
                 }
             }, 150);
         });
-
-        // ---------- ИНИЦИАЛИЗАЦИЯ ----------
         renderSlides();
-
-        // Если слайдов нет — прячем навигацию
         if (totalSlides === 0) {
             document.querySelector('.slider-wrapper')?.style.setProperty('display', 'none');
         }
-
-        // Если слайд один — прячем кнопки и точки
         if (totalSlides <= 1) {
             prevBtn?.style.setProperty('display', 'none');
             nextBtn?.style.setProperty('display', 'none');
             dotsContainer?.style.setProperty('display', 'none');
             counter?.style.setProperty('display', 'none');
         }
-
-        // Для отладки — выводим в консоль количество слайдов
-        console.log(`[Слайдер] Загружено ${totalSlides} сертификатов.`);
 
     })();
 </script>
